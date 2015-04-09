@@ -92,8 +92,8 @@ namespace i2c{
 	
 	I2CResult Writei2c(int fd, uint8_t r_addr,const uint8_t *buffer, uint32_t length){
 	
-		if(i2c_state==I2C_NO_INIT){
-			return i2c_state;
+		if(fd<0){
+			return I2C_NO_INIT;
 		}
 		
 		uint8_t tempbuffer[25];
@@ -117,10 +117,10 @@ namespace i2c{
 	*****************************/
 	I2CResult Readi2c(int fd, uint8_t r_addr, uint8_t *buffer, uint32_t length){
 
-		if(i2c_state==I2C_NO_INIT){
-			return i2c_state;
+		if(fd<0){
+			return I2C_NO_INIT;
 		}
-		
+
 		
 		if(write(fd,&r_addr,1)!=1){
 			i2c_state= SLAR_NACK;
@@ -140,10 +140,10 @@ namespace i2c{
 	*****************************/
 	I2CResult Readi2c(int fd, uint8_t *buffer, uint32_t length){
 
-		if(i2c_state==I2C_NO_INIT){
-			return i2c_state;
+		if(fd<0){
+			return I2C_NO_INIT;
 		}
-		
+
 		if(read(fd,buffer,length)!=length){
 			i2c_state=I2C_BUS_ERROR;
 			return i2c_state;
